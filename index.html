@@ -4,230 +4,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recibo Telefonico</title>
+    <title>Opciones de Recibio</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            background-color: #e7c010f3;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            padding: 20px;
+        :root{
+            --bg:#f5f7fb;
+            --card:#ffffff;
+            --muted:#6b7280;
+            --accent:#0f62fe;
+            --gap:1rem;
+            --max-width:1200px;
         }
 
-        h1 {
-            font-family: "broadway", sans-serif;
-            text-align: center;
-            margin-bottom: 20px;
+        *{box-sizing:border-box}
+        body{
+            margin:0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background:var(--bg);
+            color:#111827;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            padding:2rem 1rem;
+            display:flex;
+            justify-content:center;
         }
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
+        .page-header{
+            max-width:var(--max-width);
+            width:100%;
+            text-align:center;
+            margin-bottom:1.25rem;
         }
 
-        input, select {
-            padding: 8px;
-            margin-bottom: 10px;
-            width: 100%;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+        .page-header h1{margin:.25rem 0 0; font-size:1.5rem}
+        .lead{margin:0.25rem 0 0; color:var(--muted)}
+
+        .links-grid{
+            max-width:var(--max-width);
+            width:100%;
+            display:flex;
+            flex-wrap:wrap;
+            gap:var(--gap);
+            justify-content:center;
+            align-items:flex-start;
+            padding:0 0 2rem;
         }
 
-        input[type="radio"], input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
+        .card{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:flex-start;
+            background:var(--card);
+            padding:1rem;
+            border-radius:8px;
+            box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 1px 3px rgba(16,24,40,0.06);
+            text-decoration:none;
+            color:inherit;
+            transition:transform .15s ease, box-shadow .15s ease;
+            min-width:0;
+            border:1px solid rgba(15,23,42,0.04);
         }
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 10px;
+        .card:hover{transform:translateY(-4px); box-shadow:0 6px 18px rgba(11,20,40,0.08)}
+        .card:active{transform:translateY(-1px)}
+        .card:focus-visible{outline:3px solid rgba(15,98,254,0.15); outline-offset:3px}
+
+        .card-title{font-weight:600; display:block}
+        .card-sub{color:var(--muted); font-size:.95rem; margin-top:.25rem}
+
+        /* Responsividad - flexible con breakpoints */
+        .card{flex:1 1 100%}
+
+        @media (min-width:480px){
+            .card{flex:1 1 calc(50% - var(--gap))}
         }
 
-        button:hover {
-            background-color: #45a049;
+        @media (min-width:768px){
+            .card{flex:1 1 calc(33.333% - var(--gap))}
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
+        @media (min-width:1200px){
+            .card{flex:1 1 calc(25% - var(--gap))}
         }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto auto;
-            gap: 20px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .grid-item {
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .result {
-            grid-column: 1 / span 2;
-            text-align: center;
-        }
-
-        .phone-image {
-            position: absolute;
-            width: 120px;
-            height: 200px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: -1;
-        }
-
-        .phone-1 {
-            top: 50px;
-            left: -80px;
-            background-image: url('https://via.placeholder.com/120x200?text=Phone1');
-        }
-
-        .phone-2 {
-            top: 50px;
-            right: -80px;
-            background-image: url('https://via.placeholder.com/120x200?text=Phone2');
-        }
-
-        .phone-3 {
-            bottom: 50px;
-            left: -80px;
-            background-image: url('https://via.placeholder.com/120x200?text=Phone3');
-        }
-
-        .phone-4 {
-            bottom: 50px;
-            right: -80px;
-            background-image: url('https://via.placeholder.com/120x200?text=Phone4');
-        }
-
-        /* Estilos responsivos */
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-            }
-
-            .result {
-                grid-column: 1;
-            }
-
-            .phone-image {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
-            .grid-container {
-                padding: 10px;
-                gap: 10px;
-            }
-
-            .grid-item {
-                padding: 10px;
-            }
+        /* Mejoras visuales en texto para pantallas pequeñas */
+        @media (max-width:420px){
+            body{padding:1rem}
+            .page-header h1{font-size:1.25rem}
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Recibo Telefonico</h1>
-        
-        <!-- Imágenes de celulares alrededor del formulario -->
-        <div class="phone-image phone-1"></div>
-        <div class="phone-image phone-2"></div>
-        <div class="phone-image phone-3"></div>
-        <div class="phone-image phone-4"></div>
-        
-        <form id="calculoMinutos" action="ReciboTelefonico.html" method="GET">
-            <div class="grid-container">
-                <div class="grid-item">
-                    <label for="minCel">Minutos de celular (10.00 MXN c/u)</label>
-                    <input type="number" id="minCel" value="100">
-                </div>
+    <header class="page-header">
+        <h1>Opciones de Recibo</h1>
+        <p class="lead">Selecciona el recibo telefónico que deseas abrir.</p>
+    </header>
 
-                <div class="grid-item">
-                    <h2>Tipo de Plan</h2>
-                    <br>
-                    <div>
-                        <label for="tel">Solo teléfono (100 MX)
-                            <input type="radio" id="tel" name="plan" value="tel">
-                        </label>
-                    </div>
-                    <div>
-                        <label for="internet">Teléfono + Internet (200 MX)</label>
-                        <input type="radio" id="internet" name="plan" value="internet">
-                    </div>
-                    <div>
-                        <label for="tv">Teléfono + Internet + TV (300 MX)</label>
-                        <input type="radio" id="tv" name="plan" value="tv">
-                    </div>
-                </div>
+    <main class="links-grid" role="main">
+        <a class="card" href="raeh/recibo-raeh.html">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Ricardo Elizalde</span>
+        </a>
 
-                <div class="grid-item">
-                    <h2>Servicios Adicionales</h2>
-                    <br>
-                    <div>
-                        <label for="antivirus">Antivirus (50 MXN)
-                            <input type="checkbox" id="antivirus" name="antivirus">
-                        </label>
-                    </div>
-                    <div>
-                        <label for="nube">Servicio de Nube (150 MXN)
-                            <input type="checkbox" id="nube" name="nube">
-                        </label>
-                    </div>
-                    <div>
-                        <label for="ws">Web Services (250 MXN)
-                            <input type="checkbox" id="ws" name="ws">
-                        </label>
-                    </div>
-                </div>
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 01</span>
+        </a>
 
-                <div class="grid-item">
-                    <h2 for="paquetes">Paquetes</h2>
-                    <br>
-                    <select name="paquetes" id="paquetes">
-                        <option value="residencial">Residencial</option>
-                        <option value="pyme">PYMES</option>
-                        <option value="empresa">Empresas</option>
-                    </select>
-                </div>
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 02</span>
+        </a>
 
-                <div class="grid-item result">
-                    <h2 for="resultado">Total a pagar:</h2>
-                    <input type="text" id="resultado" readonly>
-                    <button type="button" onclick="calcular()">Calcular</button>
-                </div>
-            </div>
-        </form>
-    </div>
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 03</span>
+        </a>
 
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 04</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 05</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 06</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 07</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 08</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 10</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 11</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 12</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 13</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 14</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 15</span>
+        </a>
+
+        <a class="card" href="#">
+            <span class="card-title">Recibo Telefónico</span>
+            <span class="card-sub">Alumno 16</span>
+        </a>
+    </main>
 </body>
 
 </html>
